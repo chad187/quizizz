@@ -52,35 +52,31 @@ $(document).ready(function() {
 
   let positionCheck = (previous, current) => {
     if (previous.rank == 1 && current.rank > 1) {
-      actionQue(1, 1, createAudio(new Audio(chrome.runtime.getURL("./sounds/Freedom.mp3"))))
+      actionQue(1, 1, createAudio(new Audio(chrome.runtime.getURL("./sounds/doh.mp3"))))
     }
     else if (previous.rank > 1 && current.rank == 1) {
-      // alert(`${current.name} just took the top spot!!`)
-      // actionQue()
+      actionQue(1, 1, createAudio(new Audio(chrome.runtime.getURL("./sounds/austin_yeah.mp3"))))
     }
   }
 
   let createAudio = (myAudio) => {
-    myAudio.onloadedmetadata = () => {
-      myAudio.play();
-      setTimeout(() => {
-        if (actions.length == 1 && initialEvent) {
-          initialEvent = false
-          actions.shift()
-        }
-        else if (actions.length > 0) {
-          actions.shift().preload
-        }
-      }, Math.round(myAudio.duration * 1000));
+    myAudio.onended = () => {
+      if (actions.length == 0) {
+        initialEvent = true
+      }
+      else {
+        actions.shift().play()
+      }
     }
     return myAudio
   }
 
-  let actionQue = (type, code, action = null) => {
+  let actionQue = (type, code, action) => {
      actions.push(action)
-    if (actions.length == 1) {
-      initialEvent = true
-      action.preload
+    if (initialEvent) {
+      actions.shift()
+      action.play()
+      initialEvent = false
     }
   }
 
