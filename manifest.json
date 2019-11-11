@@ -22,5 +22,8 @@
        "lib/jquery.min.js",
        "content.js"
      ]
-   }]
+   }],
+  "web_accessible_resources": [
+    "sounds/*"
+  ]
 }
