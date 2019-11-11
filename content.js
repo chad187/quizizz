@@ -29,16 +29,17 @@ $(document).ready(function() {
       // actionQue()
     }
     else if (previous.fire < 6 && current.fire == 6) {
-      // alert(`${current.name} fire 6`)
-      // actionQue()
+      createImage(chrome.extension.getURL("images/startingDB.gif"))
     }
     else if (previous.fire < 12 && current.fire == 12) {
-      // alert(`${current.name} fire 12`)
-      // actionQue()
+      createImage(chrome.extension.getURL("images/strongDB.gif"))
     }
     else if (previous.fire < 18 && current.fire == 18) {
-      // alert(`${current.name} fire 18`)
-      // actionQue()
+      actionQue(
+        1,
+        1,
+        createAudio(new Audio(chrome.runtime.getURL("./sounds/gokutrans2.mp3"))),
+        createImage(chrome.extension.getURL("images/ultimateDB.gif")))
     }
     else if (previous.fire < 24 && current.fire == 24) {
       // alert(`${current.name} fire 24`)
@@ -52,10 +53,29 @@ $(document).ready(function() {
 
   let positionCheck = (previous, current) => {
     if (previous.rank == 1 && current.rank > 1) {
-      actionQue(1, 1, createAudio(new Audio(chrome.runtime.getURL("./sounds/doh.mp3"))))
+      actionQue(
+        1,
+        1,
+        createAudio(new Audio(chrome.runtime.getURL("./sounds/doh.mp3"))),
+        createImage(chrome.extension.getURL("images/swordFight.gif")))
     }
     else if (previous.rank > 1 && current.rank == 1) {
-      actionQue(1, 1, createAudio(new Audio(chrome.runtime.getURL("./sounds/austin_yeah.mp3"))))
+      actionQue(
+        1,
+        1,
+        createAudio(new Audio(chrome.runtime.getURL("./sounds/austin_yeah.mp3"))),
+        createImage(chrome.extension.getURL("images/swordFight.gif")))
+    }
+  }
+
+  let createImage = (url) => {
+    return () => {
+      var div = document.createElement("DIV")
+      div.id = "fire-image"
+      var img = document.createElement("IMG")
+      img.src = url
+      div.appendChild(img)
+      document.body.appendChild(div)
     }
   }
 
@@ -63,19 +83,26 @@ $(document).ready(function() {
     myAudio.onended = () => {
       if (actions.length == 0) {
         initialEvent = true
+        let elem = document.getElementById('fire-image');
+        elem.parentNode.removeChild(elem);
       }
       else {
-        actions.shift().play()
+        let elem = document.getElementById('fire-image');
+        elem.parentNode.removeChild(elem);
+        let action = actions.shift()
+        action.audioAction.play()
+        action.imageAction()
       }
     }
     return myAudio
   }
 
-  let actionQue = (type, code, action) => {
-     actions.push(action)
+  let actionQue = (type, code, audioAction, imageAction) => {
+     actions.push({audioAction, imageAction})
     if (initialEvent) {
       actions.shift()
-      action.play()
+      audioAction.play()
+      imageAction()
       initialEvent = false
     }
   }

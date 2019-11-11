@@ -21,7 +21,8 @@
      "js": [
        "lib/jquery.min.js",
        "content.js"
-     ]
+     ],
+     "css":["style.css"]
    }],
   "web_accessible_resources": [
     "sounds/*",
