@@ -25,21 +25,28 @@ $(document).ready(function() {
 
   let fireCheck = (previous, current) => {
     if (previous.fire >= 6 && current.fire < 6) {
-      // alert(`${current.name} just lost their streak of ${previous.fire}`)
-      // actionQue()
+      actionQue(
+        createAudio(new Audio(chrome.runtime.getURL("./sounds/fail.mp3"))),
+        createImage(chrome.extension.getURL("images/fail.gif"), `${current.name} lost a fire of ${previous.fire}`)
+      )
     }
     else if (previous.fire < 6 && current.fire == 6) {
-      createImage(chrome.extension.getURL("images/startingDB.gif"))
+      actionQue(
+        createAudio(new Audio(chrome.runtime.getURL("./sounds/powerup1.mp3"))),
+        createImage(chrome.extension.getURL("images/startingDB.gif"), `${current.name} has a fire of ${current.fire}`)
+      )
     }
     else if (previous.fire < 12 && current.fire == 12) {
-      createImage(chrome.extension.getURL("images/strongDB.gif"))
+      actionQue(
+        createAudio(new Audio(chrome.runtime.getURL("./sounds/gokutrans2.mp3"))),
+        createImage(chrome.extension.getURL("images/startingDB.gif"), `${current.name} has a fire of ${current.fire}`)
+      )
     }
     else if (previous.fire < 18 && current.fire == 18) {
       actionQue(
-        1,
-        1,
-        createAudio(new Audio(chrome.runtime.getURL("./sounds/gokutrans2.mp3"))),
-        createImage(chrome.extension.getURL("images/ultimateDB.gif")))
+        createAudio(new Audio(chrome.runtime.getURL("./sounds/turn_down_for_what.mp3"))),
+        createImage(chrome.extension.getURL("images/ultimateDB.gif"), `${current.name} has a fire of ${current.fire}`)
+      )
     }
     else if (previous.fire < 24 && current.fire == 24) {
       // alert(`${current.name} fire 24`)
@@ -53,28 +60,29 @@ $(document).ready(function() {
 
   let positionCheck = (previous, current) => {
     if (previous.rank == 1 && current.rank > 1) {
-      actionQue(
-        1,
-        1,
-        createAudio(new Audio(chrome.runtime.getURL("./sounds/doh.mp3"))),
-        createImage(chrome.extension.getURL("images/swordFight.gif")))
+      // actionQue(
+      //   createAudio(new Audio(chrome.runtime.getURL("./sounds/doh.mp3"))),
+      //   createImage(chrome.extension.getURL("images/swordFight.gif"))
+      // )
     }
     else if (previous.rank > 1 && current.rank == 1) {
       actionQue(
-        1,
-        1,
         createAudio(new Audio(chrome.runtime.getURL("./sounds/austin_yeah.mp3"))),
-        createImage(chrome.extension.getURL("images/swordFight.gif")))
+        createImage(chrome.extension.getURL("images/swordFight.gif"), `${current.name} is battling for the lead!`)
+      )
     }
   }
 
-  let createImage = (url) => {
+  let createImage = (url, message) => {
     return () => {
-      var div = document.createElement("DIV")
+      let div = document.createElement("DIV")
       div.id = "fire-image"
-      var img = document.createElement("IMG")
+      let img = document.createElement("IMG")
       img.src = url
       div.appendChild(img)
+      let h1 = document.createElement("H1")
+      h1.innerHTML = message
+      div.appendChild(h1)
       document.body.appendChild(div)
     }
   }
@@ -97,7 +105,7 @@ $(document).ready(function() {
     return myAudio
   }
 
-  let actionQue = (type, code, audioAction, imageAction) => {
+  let actionQue = (audioAction, imageAction) => {
      actions.push({audioAction, imageAction})
     if (initialEvent) {
       actions.shift()

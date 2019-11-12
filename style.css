@@ -3,7 +3,15 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-  }
+}
+
+#fire-image h1{
+	position: fixed;
+    top: 90%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
 #fire-image{
 	background-color: rgba(240,240,240,0.7);
 	width: 100%;
