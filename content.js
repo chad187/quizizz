@@ -48,9 +48,11 @@ $(document).ready(function() {
         createImage(chrome.extension.getURL("images/ultimateDB.gif"), `${current.name} has a fire of ${current.fire}`)
       )
     }
-    else if (previous.fire < 24 && current.fire == 24) {
-      // alert(`${current.name} fire 24`)
-      // actionQue()
+    else if (previous.fire < 25 && current.fire == 25) {
+      actionQue(
+        createAudio(new Audio(chrome.runtime.getURL("./sounds/Nuke.mp3"))),
+        createImage(chrome.extension.getURL("images/nuke.gif"), `${current.name} is blastin yall with a fire of ${current.fire}`)
+      )
     }
     else if (previous.fire < 30 && current.fire == 30) {
       // alert(`${current.name} fire 30`)
@@ -139,5 +141,11 @@ $(document).ready(function() {
     var target = document.getElementsByClassName("report-players").item(0)
     // console.log(target)
     observer.observe(target, config);
+    //for testing
+    // let p = {fire: 24}
+    // let c = {fire: 25, name: 'Jade'}
+    // fireCheck(p, c)
+    // fireCheck(p, c)
+    // fireCheck(p, c)
   }, 10000);
 });
