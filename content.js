@@ -1,5 +1,6 @@
 $(document).ready(function() {
   // Configuration of the observer
+  const cutOff = 99
   let actions = []
   let initialEvent = true
   let first = true
@@ -11,11 +12,29 @@ $(document).ready(function() {
     characterData: true
   };
 
+  let bootCheck = (player) => {
+    let total = parseFloat(player.correct) + parseFloat(player.incorrect)
+    let remaining = 100 - total
+    let current  = (parseFloat(player.correct) / total) * 100
+    if ((current + remaining) < cutOff) {
+      bootPlayer(player)
+    }
+  }
+
+  let bootPlayer = (player) => {
+    player.bootButton.click()
+    document.getElementsByClassName("yes-btn").item(0).click()
+    setTimeout(function(){
+      document.getElementsByClassName("yes-btn").item(0).click()
+    }, 200);
+  }
+
   let checkArray = (array, item) => {
     for (let i = 0; i < array.length; i ++) {
       if (array[i].name === item.name) {
         positionCheck(array[i], item)
         fireCheck(array[i], item)
+        bootCheck(item)
         array[i] = item
         return
       }
@@ -126,9 +145,11 @@ $(document).ready(function() {
           checkArray(rank, {
             name: mutation.target.children[2].innerText,
             rank: mutation.target.children[0].children[1].innerText,
-            fire: mutation.target.children[3].children[0].children[1].innerText
+            fire: mutation.target.children[3].children[0].children[1].innerText,
+            correct: mutation.target.children[3].children[0].children[0].children[0].style.cssText.split(" ")[1].split("%")[0],
+            incorrect: mutation.target.children[3].children[0].children[0].children[1].style.cssText.split(" ")[1].split("%")[0],
+            bootButton: mutation.target.children[5].children[0]
           })
-          // console.log(rank)
         }
         else {
           first = true
@@ -139,7 +160,6 @@ $(document).ready(function() {
   // Select the target node (tweet modal)
   setTimeout(function(){
     var target = document.getElementsByClassName("report-players").item(0)
-    // console.log(target)
     observer.observe(target, config);
     //for testing
     // let p = {fire: 24}
