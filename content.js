@@ -1,6 +1,6 @@
 $(document).ready(function() {
   // Configuration of the observer
-  const cutOff = 99
+  const cutOff = 40
   let actions = []
   let initialEvent = true
   let first = true
@@ -43,7 +43,13 @@ $(document).ready(function() {
   }
 
   let fireCheck = (previous, current) => {
-    if (previous.fire >= 6 && current.fire < 6) {
+    if (previous.fire >= 12 && current.fire < 12) {
+      actionQue(
+        createAudio(new Audio(chrome.runtime.getURL("./sounds/shutdown.mp3"))),
+        createImage(chrome.extension.getURL("images/dumb.gif"), `${current.name} lost a fire of ${previous.fire}`)
+      )
+    }
+    else if (previous.fire >= 6 && current.fire < 6) {
       actionQue(
         createAudio(new Audio(chrome.runtime.getURL("./sounds/fail.mp3"))),
         createImage(chrome.extension.getURL("images/fail.gif"), `${current.name} lost a fire of ${previous.fire}`)
@@ -163,9 +169,7 @@ $(document).ready(function() {
     observer.observe(target, config);
     //for testing
     // let p = {fire: 24}
-    // let c = {fire: 25, name: 'Jade'}
-    // fireCheck(p, c)
-    // fireCheck(p, c)
+    // let c = {fire: 0, name: 'Jade'}
     // fireCheck(p, c)
   }, 10000);
 });
