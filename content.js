@@ -5,6 +5,7 @@ $(document).ready(function() {
   let initialEvent = true
   let first = true
   let rank = []
+  let warned = []
   var config = { 
     childList: true,
     subtree: true,
@@ -19,6 +20,22 @@ $(document).ready(function() {
     if ((current + remaining) < cutOff) {
       bootPlayer(player)
     }
+    else if ((current + remaining) < cutOff * 1.5) {
+      bootWarning(player)
+    }
+  }
+
+  let bootWarning = (player) => {
+    for(var i = 0; i < warned.length; i++) {
+      if (warned[i].name == player.name) {
+        return
+      }
+    }
+    warned.push(player)
+    actionQue(
+      createAudio(new Audio(chrome.runtime.getURL("./sounds/slowDown.mp3"))),
+      createImage(chrome.extension.getURL("images/slowDown.gif"), `${player.name} slow down, be excelent!`)
+    )
   }
 
   let bootPlayer = (player) => {
@@ -26,7 +43,13 @@ $(document).ready(function() {
     document.getElementsByClassName("yes-btn").item(0).click()
     setTimeout(function(){
       document.getElementsByClassName("yes-btn").item(0).click()
-    }, 200);
+    }, 200)
+
+    for(var i = 0; i < warned.length; i++) {
+      if (warned[i].name == player.name) {
+        warned.splice(i, 1)
+      }
+    }
   }
 
   let checkArray = (array, item) => {
