@@ -24,10 +24,10 @@ $(document).ready(function() {
   }
 
   let fireCheck = (previous, current) => {
-    if (previous.fire >= 6 && current.fire < 6) {
+    if (previous.fire >= 15 && current.fire < 15) {
       actionQue(
-        createAudio(new Audio(chrome.runtime.getURL("./sounds/fail.mp3"))),
-        createImage(chrome.extension.getURL("images/fail.gif"), `${current.name} lost a fire of ${previous.fire}`)
+        createAudio(new Audio(chrome.runtime.getURL("./sounds/POTG.mp3"))),
+        createImage(chrome.extension.getURL("images/fish.gif"), `${current.name} has a fire of ${current.fire}`)
       )
     }
     else if (previous.fire < 6 && current.fire == 6) {
