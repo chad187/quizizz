@@ -1,6 +1,6 @@
 $(document).ready(function() {
   // Configuration of the observer
-  const cutOff = 40
+  const cutOff = 50
   let actions = []
   let initialEvent = true
   let first = true
@@ -20,7 +20,7 @@ $(document).ready(function() {
     if ((current + remaining) < cutOff) {
       bootPlayer(player)
     }
-    else if ((current + remaining) < cutOff * 1.5) {
+    else if ((current + remaining) < cutOff * 1.22) {
       bootWarning(player)
     }
   }
@@ -43,7 +43,7 @@ $(document).ready(function() {
     document.getElementsByClassName("yes-btn").item(0).click()
     setTimeout(function(){
       document.getElementsByClassName("yes-btn").item(0).click()
-    }, 200)
+    }, 300)
 
     for(var i = 0; i < warned.length; i++) {
       if (warned[i].name == player.name) {
@@ -194,5 +194,6 @@ $(document).ready(function() {
     // let p = {fire: 24}
     // let c = {fire: 0, name: 'Jade'}
     // fireCheck(p, c)
+    // bootWarning({correct: 0, incorrect: 90, name: 'Jade'})
   }, 10000);
 });
