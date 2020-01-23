@@ -52,16 +52,15 @@ $(document).ready(function() {
       // alert(`${current.name} fire 24`)
       // actionQue()
     }
+     else if (previous.fire < 27 && current.fire == 27) {
+      actionQue(
+        createAudio(new Audio(chrome.runtime.getURL("./sounds/it's_over_nine_thousand.mp3"))),
+        createImage(chrome.extension.getURL("images/Calculator.jpg"), `${current.name} has a fire of ${current.fire}`)
+      )
+    }
     else if (previous.fire < 30 && current.fire == 30) {
       // alert(`${current.name} fire 30`)
       // actionQue()
-    }
-  }
-  else if (previous.fire < 27 && current.fire == 27) {
-      actionQue(
-        createAudio(new Audio(chrome.runtime.getURL("./sounds/it's_over_nine_thousand.mp3"))),
-        createImage(chrome.extension.getURL("images/image.jpg"), `${current.name} has a fire of ${current.fire}`)
-      )
     }
     else if (previous.fire < 36 && current.fire == 36) {
       actionQue(
