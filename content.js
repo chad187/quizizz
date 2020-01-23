@@ -48,6 +48,12 @@ $(document).ready(function() {
         createImage(chrome.extension.getURL("images/ultimateDB.gif"), `${current.name} has a fire of ${current.fire}`)
       )
     }
+    else if (previous.fire < 27 && current.fire == 27) {
+      actionQue(
+        createAudio(new Audio(chrome.runtime.getURL("./sounds/it's_over_nine_thousand.mp3"))),
+        createImage(chrome.extension.getURL("images/image.jpg"), `${current.name} has a fire of ${current.fire}`)
+      )
+    }
     else if (previous.fire < 24 && current.fire == 24) {
       // alert(`${current.name} fire 24`)
       // actionQue()
