@@ -54,6 +54,12 @@ $(document).ready(function() {
         createImage(chrome.extension.getURL("images/image.jpg"), `${current.name} has a fire of ${current.fire}`)
       )
     }
+    else if (previous.fire < 36 && current.fire == 36) {
+      actionQue(
+        createAudio(new Audio(chrome.runtime.getURL("./sounds/best.mp3"))),
+        createImage(chrome.extension.getURL("images/pirate.jpg"), `${current.name} has a fire of ${current.fire}`)
+      )
+    }
     else if (previous.fire < 24 && current.fire == 24) {
       // alert(`${current.name} fire 24`)
       // actionQue()
