@@ -107,7 +107,18 @@ $(document).ready(function() {
       // actionQue()
     }
   }
-
+  else if (previous.fire < 27 && current.fire == 27) {
+      actionQue(
+        createAudio(new Audio(chrome.runtime.getURL("./sounds/it's_over_nine_thousand.mp3"))),
+        createImage(chrome.extension.getURL("images/image.jpg"), `${current.name} has a fire of ${current.fire}`)
+      )
+    }
+    else if (previous.fire < 36 && current.fire == 36) {
+      actionQue(
+        createAudio(new Audio(chrome.runtime.getURL("./sounds/best.mp3"))),
+        createImage(chrome.extension.getURL("images/pirate.jpg"), `${current.name} has a fire of ${current.fire}`)
+      )
+    }
   let positionCheck = (previous, current) => {
     if (previous.rank == 1 && current.rank > 1) {
       // actionQue(
