@@ -34,7 +34,7 @@ $(document).ready(function() {
     warned.push(player)
     actionQue(
       createAudio(new Audio(chrome.runtime.getURL("./sounds/slowDown.mp3"))),
-      createImage(chrome.extension.getURL("images/slowDown.gif"), `${player.name} slow down, be excelent!`)
+      createImage(chrome.extension.getURL("images/slowDown.gif"), `${player.name} slow down, be excellent!`)
     )
   }
 
@@ -172,12 +172,12 @@ $(document).ready(function() {
         if (mutation.target.className == "report-player" && first) {
           first = false
           checkArray(rank, {
-            name: mutation.target.children[2].innerText,
-            rank: mutation.target.children[0].children[1].innerText,
-            fire: mutation.target.children[3].children[0].children[1].innerText,
-            correct: mutation.target.children[3].children[0].children[0].children[0].style.cssText.split(" ")[1].split("%")[0],
-            incorrect: mutation.target.children[3].children[0].children[0].children[1].style.cssText.split(" ")[1].split("%")[0],
-            bootButton: mutation.target.children[5].children[0]
+            name: mutation.target.children[3].innerText,
+            rank: mutation.target.children[1].children[0].innerText,
+            fire: mutation.target.children[4].children[0].children[1].children[1].innerText,
+            correct: mutation.target.children[4].children[0].children[0].children[0].style.cssText.split(" ")[1].split("%")[0],
+            incorrect: mutation.target.children[4].children[0].children[0].children[1].style.cssText.split(" ")[1].split("%")[0],
+            bootButton: mutation.target.children[6].children[0]
           })
         }
         else {
@@ -191,8 +191,8 @@ $(document).ready(function() {
     var target = document.getElementsByClassName("report-players").item(0)
     observer.observe(target, config);
     //for testing
-    // let p = {fire: 24}
-    // let c = {fire: 0, name: 'Jade'}
+    // let c = {fire: 24}
+    // let p = {fire: 0, name: 'Jade'}
     // fireCheck(p, c)
     // bootWarning({correct: 0, incorrect: 90, name: 'Jade'})
   }, 10000);
